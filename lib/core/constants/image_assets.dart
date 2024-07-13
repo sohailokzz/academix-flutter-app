@@ -1,11 +1,7 @@
 abstract class ImgAssets {
-  static const String logo = 'assets/images/auth/logo.webp';
-  static const String arabicMain = 'assets/images/arabicmain.png';
-  static const String indianMain = 'assets/images/indianmain.png';
-  static const String khafifMain = 'assets/images/khafifmain.png';
-  static const String bridalMain = 'assets/images/bridalmain.png';
-  static const String tattoMain = 'assets/images/tattomain.png';
-  static const String westernMain = 'assets/images/westernmain.png';
-  static const String jewelleryMain = 'assets/images/jewllrymain.png';
-  static const String scaffoldBack = "assets/images/scaffoldbackgrnd.png";
+  static const String onBrd1 = 'assets/images/onbrd1.svg';
+  static const String onBrd2 = 'assets/images/onbrd2.svg';
+  static const String onBrd3 = 'assets/images/onbrd3.svg';
+  static const String onBrd4 = 'assets/images/onbrd4.svg';
+  static const String onBrd5 = 'assets/images/onbrd5.svg';
 }

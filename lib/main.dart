@@ -1,5 +1,5 @@
 import 'package:acad/core/constants/app_strings.dart';
-import 'package:acad/ui/screens/home_screen.dart';
+import 'package:acad/ui/screens/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'core/constants/colors.dart';
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: AppTextStyles.textTheme,
       ),
-      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
+      home: const OnboardingScreen(),
     );
   }
 }
