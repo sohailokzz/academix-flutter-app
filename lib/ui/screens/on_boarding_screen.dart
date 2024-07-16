@@ -1,35 +1,30 @@
-import 'package:acad/core/constants/colors.dart';
-import 'package:acad/core/constants/on_boarding_data.dart';
-import 'package:acad/core/constants/screen_utils.dart';
+import 'package:acad/providers/on_boarding_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/constants/colors.dart';
+import '../../core/constants/on_boarding_data.dart';
+import '../../core/constants/screen_utils.dart';
+import '../widgets/default_button.dart';
 import '../widgets/onboarding_design.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
-}
-
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final SwiperController _controller = SwiperController();
-  int _currentIndex = 0;
-  @override
   Widget build(BuildContext context) {
+    final onboardingProvider = Provider.of<OnBoardingProvider>(context);
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Swiper(
-            index: _currentIndex,
+            index: onboardingProvider.currentIndex,
             onIndexChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
+              onboardingProvider.setCurrentIndex(index);
             },
-            pagination: _currentIndex != 4
+            pagination: onboardingProvider.currentIndex != 4
                 ? const SwiperPagination(
                     alignment: Alignment.bottomCenter,
                     margin: EdgeInsets.only(
@@ -41,6 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   )
                 : null,
+            controller: onboardingProvider.swiperConroller,
             itemCount: 5,
             itemBuilder: (context, index) {
               return OnboardingDesign(
@@ -63,93 +59,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     bottomRight: Radius.circular(12.0),
                   ),
                 ),
-                child: _currentIndex == 4
+                child: onboardingProvider.currentIndex == 4
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                            child: SizedBox(
+                            child: DefaultButton(
+                              onPress: () {},
                               height: 48,
                               width: 212,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(5), // <-- Radius
-                                  ),
-                                ),
-                                child: Text(
-                                  'Sign In',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                              ),
+                              title: 'Sign In',
                             ),
                           ),
                           kWidth(16),
                           Expanded(
-                            child: SizedBox(
+                            child: DefaultButton(
+                              onPress: () {},
                               height: 48,
                               width: 212,
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                child: Text(
-                                  'Sign Up',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                        color: Colors.black,
-                                      ),
-                                ),
-                              ),
+                              buttonColor: Colors.white,
+                              textColor: AppColors.primaryColor,
+                              title: 'Sign Up',
                             ),
                           ),
                         ],
                       )
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 16, bottom: 10),
-                        child: SizedBox(
-                          height: 54,
-                          width: 212,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_currentIndex != 4) {
-                                _controller.next();
-                              } else {}
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(10), // <-- Radius
-                              ),
-                            ),
-                            child: Text(
-                              'Continue',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ),
-                          ),
-                        ),
+                    : DefaultButton(
+                        onPress: () {
+                          onboardingProvider.next();
+                        },
+                        height: 54,
+                        width: 212,
+                        title: 'Continue',
                       ),
               ),
             ),
@@ -161,18 +102,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             child: Align(
               alignment: Alignment.topRight,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.btnBackGreyColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // <-- Radius
-                  ),
-                ),
-                child: Text(
-                  'Skip',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+              child: DefaultButton(
+                onPress: () {},
+                title: 'Skip',
+                height: 36,
+                width: 70,
+                buttonColor: AppColors.btnBackGreyColor,
+                textColor: Colors.black,
+                outlineBorder: false,
+                textSize: 16,
               ),
             ),
           )
