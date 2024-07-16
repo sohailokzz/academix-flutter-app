@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../core/constants/colors.dart';
 
 class DefaultButton extends StatelessWidget {
@@ -14,6 +12,7 @@ class DefaultButton extends StatelessWidget {
   final double textSize;
   final FontWeight fontWeight;
   final bool isLoading;
+  final bool outlineBorder;
 
   const DefaultButton({
     super.key,
@@ -27,33 +26,28 @@ class DefaultButton extends StatelessWidget {
     this.fontWeight = FontWeight.w500,
     this.buttonColor = AppColors.primaryColor,
     this.isLoading = false,
+    this.outlineBorder = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? 5,
-      width: width ?? 40,
+      height: height ?? 50,
+      width: width ?? 80,
       decoration: BoxDecoration(
+        border: outlineBorder
+            ? Border.all(
+                color: AppColors.primaryColor,
+              )
+            : null,
+        color: buttonColor,
         borderRadius: BorderRadius.circular(11),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            // Color(0xff21C4FA),
-            // Color(0xff338DFD),
-            Theme.of(context).colorScheme.surface,
-            Theme.of(context).colorScheme.secondary,
-
-            // Theme.of(context).colorScheme.primary,
-          ],
-        ),
       ),
       child: Material(
         borderRadius: BorderRadius.circular(11),
         color: Colors.transparent,
         child: InkWell(
-          splashColor: Colors.blueAccent,
+          splashColor: Colors.transparent,
           borderRadius: BorderRadius.circular(11),
           onTap: onPress,
           child: Center(
@@ -61,17 +55,16 @@ class DefaultButton extends StatelessWidget {
                 ? const SizedBox(
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(color: Colors.white),
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
                   )
                 : Text(
                     title,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: textColor,
-                        fontWeight: fontWeight,
-                        fontSize: textSize,
-                      ),
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: textColor,
+                          fontSize: textSize,
+                        ),
                   ),
           ),
         ),
